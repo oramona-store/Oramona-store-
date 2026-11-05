@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORAMONA | متجر أورامونا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fcf8f9;
+            --primary-dark: #221317;
+            --accent-gold: #d4af37;
+            --card-bg: #ffffff;
+            --btn-pink: #f0a8b9;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: #333;
+            padding-bottom: 50px;
+        }
+
+        #welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: radial-gradient(circle, #2d1820 0%, #150a0d 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-circle {
+            width: 130px;
+            height: 130px;
+            border: 2px solid var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 25px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+            font-size: 40px;
+        }
+
+        .brand-title {
+            font-size: 32px;
+            letter-spacing: 4px;
+            color: var(--accent-gold);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .brand-subtitle {
+            font-size: 13px;
+            color: #ccc;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .enter-btn {
+            background: linear-gradient(135deg, #f4b6c2, #e895a7);
+            color: #fff;
+            border: none;
+            padding: 12px 45px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(244, 182, 194, 0.4);
+        }
+
+        header {
+            background-color: var(--primary-dark);
+            color: var(--accent-gold);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        header .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        header .header-sub {
+            font-size: 12px;
+            color: #ddd;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 25px 0 15px;
+            color: var(--primary-dark);
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .cat-btn {
+            background: #fff;
+            border: 1px solid #ead6dd;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            color: #555;
+            transition: 0.3s;
+        }
+
+        .cat-btn.active {
+            background-color: var(--btn-pink);
+            color: #fff;
+            border-color: var(--btn-pink);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid #f0e6e8;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .product-price {
+            color: #b8860b;
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .select-prod-btn {
+            background-color: var(--primary-dark);
+            color: #fff;
+            border: none;
+            padding: 7px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .no-products {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            color: #888;
+            border: 1px dashed #e0d0d5;
+        }
+
+        .order-form {
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border: 1px solid #f0e6e8;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #444;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background: #fafafa;
+        }
+
+        .submit-btn {
+            background-color: #25d366;
+            color: #fff;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .admin-login-box {
+            background: #fff;
+            border: 1px solid #f0e6e8;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .admin-panel {
+            background: #fff0f3;
+            border: 2px dashed #f4b6c2;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 40px;
+            display: none;
+        }
+
+        .admin-title {
+            text-align: center;
+            color: var(--primary-dark);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .add-btn {
+            background: var(--primary-dark);
+            color: #fff;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .login-btn {
+            background: var(--accent-gold);
+            color: #221317;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="welcome-screen">
+        <div class="logo-circle">✨</div>
+        <div class="brand-title">ORAMONA</div>
+        <div class="brand-subtitle">ELEVATE YOUR SCENT, EMBRACE YOUR AURA</div>
+        <button class="enter-btn" onclick="closeWelcome()">دخول المتجر 🛍️</button>
+    </div>
+
+    <header>
+        <span class="header-sub">Luxury Collection</span>
+        <span class="logo-text">ORAMONA</span>
+    </header>
+
+    <div class="container">
+
+        <h2 class="section-title">🌸 تصفح الأقسام</h2>
+        <div class="categories">
+            <button class="cat-btn active" onclick="filterCat('الكل', this)">الكل</button>
+            <button class="cat-btn" onclick="filterCat('عطور', this)">✨ العطور</button>
+            <button class="cat-btn" onclick="filterCat('مكياج', this)">💄 المكياج</button>
+            <button class="cat-btn" onclick="filterCat('سكين كير', this)">🧴 سكين كير</button>
+        </div>
+
+        <h2 class="section-title">🛍️ المنتجات المتاحة</h2>
+        <div class="products-grid" id="productsGrid"></div>
+        <div id="noProducts" class="no-products" style="display: none;">
+            لا توجد منتجات مضافة حالياً.
+        </div>
+
+        <div class="order-form">
+            <h2 class="section-title" style="margin-top: 0;">إتمام الطلب</h2>
+            <div class="form-group">
+                <label>المنتج المختار:</label>
+                <input type="text" id="orderProduct" class="form-control" placeholder="اضغطي على اختيار منتج من الأعلى" readonly>
+            </div>
+            <div class="form-group">
+                <label>اسم العميل بالكامل:</label>
+                <input type="text" id="clientName" class="form-control" placeholder="الاسم الكريم">
+            </div>
+            <div class="form-group">
+                <label>عنوان التوصيل والمحافظة:</label>
+                <input type="text" id="clientAddress" class="form-control" placeholder="المحافظة - المدينة - التفاصيل...">
+            </div>
+            <div class="form-group">
+                <label>طريقة التأكيد والدفع:</label>
+                <select class="form-control">
+                    <option>الحجز بديبوزيت (Deposit)</option>
+                </select>
+            </div>
+            <button class="submit-btn" onclick="sendToWhatsapp()">تأكيد الطلب عبر الواتساب 💬</button>
+        </div>
+
+        <!-- خانة تسجيل دخول المالك بالرقم السري -->
+        <div id="loginBox" class="admin-login-box">
+            <div class="admin-title">🔒 دخول لوحة تحكم المالك</div>
+            <div class="form-group">
+                <label>أدخل كلمة السر:</label>
+                <input type="password" id="adminPassword" class="form-control" placeholder="أدخل الرقم السري">
+            </div>
+            <button class="login-btn" onclick="checkAdminPassword()">دخول لوحة التحكم 🔑</button>
+        </div>
+
+        <!-- لوحة التحكم المحمية بالكلمة السرية -->
+        <div id="adminPanel" class="admin-panel">
+            <div class="admin-title">👑 لوحة تحكم المالك (إضافة منتج جديد)</div>
+            
+            <div class="form-group">
+                <label>اسم المنتج:</label>
+                <input type="text" id="newProdName" class="form-control" placeholder="مثال: عطر بلاش">
+            </div>
+
+            <div class="form-group">
+                <label>القسم:</label>
+                <select id="newProdCat" class="form-control">
+                    <option value="عطور">عطور</option>
+                    <option value="مكياج">مكياج</option>
+                    <option value="سكين كير">سكين كير</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>السعر (بالجنيه):</label>
+                <input type="number" id="newProdPrice" class="form-control" placeholder="مثال: 270">
+            </div>
+
+            <div class="form-group">
+                <label>اختر صورة المنتج من الموبايل:</label>
+                <input type="file" id="newProdImage" class="form-control" accept="image/*">
+            </div>
+
+            <button class="add-btn" onclick="addNewProduct()">تنزيل المنتج على الموقع 🚀</button>
+        </div>
+
+    </div>
+
+    <script>
+        function closeWelcome() {
+            const welcome = document.getElementById('welcome-screen');
+            welcome.style.opacity = '0';
+            setTimeout(() => {
+                welcome.style.display = 'none';
+            }, 300);
+        }
+
+        const MY_SECRET_PASS = "aishaimran4321";
+
+        function checkAdminPassword() {
+            const enteredPass = document.getElementById('adminPassword').value;
+            if (enteredPass === MY_SECRET_PASS) {
+                document.getElementById('loginBox').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                alert('مرحباً بكِ يا مالكة المتجر ✨ تم فتح لوحة التحكم بنجاح!');
+            } else {
+                alert('كلمة السر غير صحيحة! ❌');
+            }
+        }
+
+        let products = JSON.parse(localStorage.getItem('oramona_products')) || [];
+
+        function renderProducts(filter = 'الكل') {
+            const grid = document.getElementById('productsGrid');
+            const noProd = document.getElementById('noProducts');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'الكل' ? products : products.filter(p => p.category === filter);
+
+            if (filtered.length === 0) {
+                noProd.style.display = 'block';
+            } else {
+                noProd.style.display = 'none';
+                filtered.forEach((p) => {
+                    grid.innerHTML += `
+                        <div class="product-card">
+                            <img src="${p.image}" alt="${p.name}">
+                            <div>
+                                <div class="product-title">${p.name}</div>
+                                <div class="product-price">${p.price} EGP</div>
+                            </div>
+                            <button class="select-prod-btn" onclick="selectProduct('${p.name}')">اختيار المنتج 🛒</button>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        function selectProduct(name) {
+            document.getElementById('orderProduct').value = name;
+            window.scrollTo({ top: document.querySelector('.order-form').offsetTop - 20, behavior: 'smooth' });
+        }
+
+        function filterCat(cat, btn) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderProducts(cat);
+        }
+
+        function addNewProduct() {
+            const name = document.getElementById('newProdName').value;
+            const category = document.getElementById('newProdCat').value;
+            const price = document.getElementById('newProdPrice').value;
+            const fileInput = document.getElementById('newProdImage');
+
+            if (!name || !price || fileInput.files.length === 0) {
+                alert('يرجى ملء جميع البيانات واختيار صورة للمنتج!');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const imageUrl = e.target.result;
+                products.push({ name, category, price, image: imageUrl });
+                localStorage.setItem('oramona_products', JSON.stringify(products));
+                renderProducts();
+
+                document.getElementById('newProdName').value = '';
+                document.getElementById('newProdPrice').value = '';
+                fileInput.value = '';
+                alert('تمت إضافة المنتج بنجاح للمتجر! 🎉');
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        function sendToWhatsapp() {
+            const prod = document.getElementById('orderProduct').value;
+            const name = document.getElementById('clientName').value;
+            const address = document.getElementById('clientAddress').value;
+
+            if (!prod || !name || !address) {
+                alert('برجاء اختيار المنتج واختيار الاسم والعنوان لإتمام الطلب!');
+                return;
+            }
+
+            const phone = "201004007459"; 
+            const msg = `مرحباً أورامونا ORAMONA ✨%0Aأود حجز المنتج التالي:%0A🛍️ المنتج: ${prod}%0A👤 الاسم: ${name}%0A📍 العنوان: ${address}%0A💳 طريقة الدفع: الحجز بديبوزيت`;
+            
+            window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+        }
+
+        renderProducts();
+    </script>
+</body>
+</html>
